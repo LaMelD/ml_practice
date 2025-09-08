@@ -1,0 +1,36 @@
+{"id": "table_users", "text": "테이블 users: 고객 정보를 저장하는 테이블. 컬럼: id (고객 ID (Primary Key).), name (고객 이름.), age (고객 나이.), city (거주 도시.), signup_date (가입 날짜.), membership_level (회원 등급 (예: 일반, VIP).)"}
+{"id": "table_orders", "text": "테이블 orders: 주문 정보를 저장하는 테이블. 컬럼: id (주문 ID (Primary Key).), user_id (사용자 ID (Foreign Key → users.id).), product_name (상품 이름.), quantity (주문 수량.), price (단가 또는 총액.), order_date (주문 날짜.)"}
+{"id": "table_products", "text": "테이블 products: 상품 정보를 저장하는 테이블. 컬럼: id (상품 ID (Primary Key).), name (상품 이름.), category (상품 카테고리.), price (상품 가격.), stock (재고 수량.)"}
+{"id": "table_order_items", "text": "테이블 order_items: 주문 상세(아이템 단위) 정보를 저장하는 테이블. 컬럼: id (주문 아이템 ID (Primary Key).), order_id (주문 ID (Foreign Key → orders.id).), product_id (상품 ID (Foreign Key → products.id).), quantity (해당 상품 수량.), price (해당 상품의 가격.)"}
+{"id": "column_users_id", "text": "users.id: 고객 ID (Primary Key)."}
+{"id": "column_users_name", "text": "users.name: 고객 이름."}
+{"id": "column_users_age", "text": "users.age: 고객 나이."}
+{"id": "column_users_city", "text": "users.city: 거주 도시."}
+{"id": "column_users_signup_date", "text": "users.signup_date: 가입 날짜."}
+{"id": "column_users_membership_level", "text": "users.membership_level: 회원 등급 (예: 일반, VIP)."}
+{"id": "column_orders_id", "text": "orders.id: 주문 ID (Primary Key)."}
+{"id": "column_orders_user_id", "text": "orders.user_id: 사용자 ID (Foreign Key → users.id)."}
+{"id": "column_orders_product_name", "text": "orders.product_name: 상품 이름."}
+{"id": "column_orders_quantity", "text": "orders.quantity: 주문 수량."}
+{"id": "column_orders_price", "text": "orders.price: 단가 또는 총액."}
+{"id": "column_orders_order_date", "text": "orders.order_date: 주문 날짜."}
+{"id": "column_products_id", "text": "products.id: 상품 ID (Primary Key)."}
+{"id": "column_products_name", "text": "products.name: 상품 이름."}
+{"id": "column_products_category", "text": "products.category: 상품 카테고리."}
+{"id": "column_products_price", "text": "products.price: 상품 가격."}
+{"id": "column_products_stock", "text": "products.stock: 재고 수량."}
+{"id": "column_order_items_id", "text": "order_items.id: 주문 아이템 ID (Primary Key)."}
+{"id": "column_order_items_order_id", "text": "order_items.order_id: 주문 ID (Foreign Key → orders.id)."}
+{"id": "column_order_items_product_id", "text": "order_items.product_id: 상품 ID (Foreign Key → products.id)."}
+{"id": "column_order_items_quantity", "text": "order_items.quantity: 해당 상품 수량."}
+{"id": "column_order_items_price", "text": "order_items.price: 해당 상품의 가격."}
+{"id": "relationship_1", "text": "관계: orders.user_id -> users.id (한 사용자는 여러 주문을 가질 수 있다)."}
+{"id": "relationship_2", "text": "관계: order_items.order_id -> orders.id (한 주문은 여러 주문 아이템을 가진다)."}
+{"id": "relationship_3", "text": "관계: order_items.product_id -> products.id (각 주문 아이템은 특정 상품을 참조한다)."}
+{"id": "example_query_1", "text": "예시 질의: 서울에 사는 고객 평균 나이 → SELECT AVG(age) FROM users WHERE city='서울';"}
+{"id": "example_query_2", "text": "예시 질의: 지난달 신규 가입자 수 → SELECT COUNT(*) FROM users WHERE signup_date >= DATE_TRUNC('month', CURRENT_DATE - INTERVAL '1 month') AND signup_date < DATE_TRUNC('month', CURRENT_DATE);"}
+{"id": "example_query_3", "text": "예시 질의: 상품별 총 판매 수량 → SELECT product_name, SUM(quantity) FROM orders GROUP BY product_name;"}
+{"id": "example_query_4", "text": "예시 질의: VIP 회원의 주문 총액 → SELECT SUM(price*quantity) FROM orders o JOIN users u ON o.user_id=u.id WHERE u.membership_level='VIP';"}
+{"id": "example_query_5", "text": "예시 질의: 재고가 10개 미만인 상품 → SELECT name FROM products WHERE stock < 10;"}
+{"id": "example_query_6", "text": "예시 질의: 가장 많이 팔린 상품 TOP 5 → SELECT product_id, SUM(quantity) AS total_sold FROM order_items GROUP BY product_id ORDER BY total_sold DESC LIMIT 5;"}
+{"id": "example_query_7", "text": "예시 질의: 사용자별 총 주문 금액 → SELECT u.name, SUM(oi.price * oi.quantity) AS total_spent FROM users u JOIN orders o ON u.id=o.user_id JOIN order_items oi ON o.id=oi.order_id GROUP BY u.name;"}

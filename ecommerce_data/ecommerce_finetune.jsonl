@@ -1,0 +1,15 @@
+{"input": "지난달에 가입한 사용자 수를 알려줘", "output": "SELECT COUNT(*) FROM users WHERE signup_date >= DATE_TRUNC('month', CURRENT_DATE - INTERVAL '1 month') AND signup_date < DATE_TRUNC('month', CURRENT_DATE);"}
+{"input": "가장 많이 판매된 상품 5개를 알려줘", "output": "SELECT product_name, SUM(quantity) AS total_sold FROM orders GROUP BY product_name ORDER BY total_sold DESC LIMIT 5;"}
+{"input": "서울에 사는 고객들의 평균 나이를 알려줘", "output": "SELECT AVG(age) FROM users WHERE city = '서울';"}
+{"input": "2024년 1월 매출 총합을 알려줘", "output": "SELECT SUM(quantity * price) FROM orders WHERE order_date >= '2024-01-01' AND order_date < '2024-02-01';"}
+{"input": "회원 등급별 사용자 수를 보여줘", "output": "SELECT membership_level, COUNT(*) FROM users GROUP BY membership_level;"}
+{"input": "지난달 신규 가입 고객 수는?", "output": "SELECT COUNT(*) FROM users WHERE signup_date >= DATE_TRUNC('month', CURRENT_DATE - INTERVAL '1 month') AND signup_date < DATE_TRUNC('month', CURRENT_DATE);"}
+{"input": "회원 등급별 고객 수를 보여줘", "output": "SELECT membership_level, COUNT(*) FROM users GROUP BY membership_level;"}
+{"input": "서울에 거주하는 고객들의 평균 나이는?", "output": "SELECT AVG(age) FROM users WHERE city = '서울';"}
+{"input": "올해 1월의 총 매출은?", "output": "SELECT SUM(quantity * price) FROM orders WHERE order_date >= '2024-01-01' AND order_date < '2024-02-01';"}
+{"input": "가장 많이 판매된 상품 3개는?", "output": "SELECT product_name, SUM(quantity) AS total_sold FROM orders GROUP BY product_name ORDER BY total_sold DESC LIMIT 3;"}
+{"input": "상품 카테고리별 매출 합계를 알려줘", "output": "SELECT p.category, SUM(oi.quantity * oi.price) AS revenue FROM order_items oi JOIN products p ON oi.product_id = p.id GROUP BY p.category;"}
+{"input": "가장 구매를 많이 한 고객은 누구야?", "output": "SELECT u.name, COUNT(o.id) AS order_count FROM users u JOIN orders o ON u.id = o.user_id GROUP BY u.name ORDER BY order_count DESC LIMIT 1;"}
+{"input": "Platinum 등급 고객들의 최근 주문 내역은?", "output": "SELECT o.* FROM orders o JOIN users u ON o.user_id = u.id WHERE u.membership_level = 'Platinum' ORDER BY o.order_date DESC LIMIT 10;"}
+{"input": "지난 6개월 동안 매출 추이를 월별로 보여줘", "output": "SELECT DATE_TRUNC('month', order_date) AS month, SUM(quantity * price) AS revenue FROM orders WHERE order_date >= CURRENT_DATE - INTERVAL '6 months' GROUP BY month ORDER BY month;"}
+{"input": "재구매율(2회 이상 주문한 고객 비율)을 계산해줘", "output": "SELECT (COUNT(DISTINCT user_id) FILTER (WHERE order_count >= 2) * 100.0 / COUNT(DISTINCT user_id)) AS repeat_purchase_rate FROM (SELECT user_id, COUNT(*) AS order_count FROM orders GROUP BY user_id) t;"}

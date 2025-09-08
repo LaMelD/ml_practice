@@ -1,0 +1,21 @@
+{"type": "schema", "content": "Table: users\nColumns:\n- id (integer, primary key)\n- name (varchar)\n- age (integer)\n- city (varchar)\n- signup_date (date)\n- membership_level (varchar)"}
+{"type": "schema", "content": "Table: orders\nColumns:\n- id (integer, primary key)\n- user_id (foreign key -> users.id)\n- product_name (varchar)\n- quantity (integer)\n- price (numeric)\n- order_date (date)"}
+{"type": "description", "content": "signup_date → 사용자가 가입한 날짜"}
+{"type": "description", "content": "membership_level → 사용자의 멤버십 등급 (예: Silver, Gold, Platinum)"}
+{"type": "description", "content": "orders → 고객이 구매한 주문 내역"}
+{"type": "example_query", "content": "Q: 서울에 사는 고객 수\nA: SELECT COUNT(*) FROM users WHERE city='서울';"}
+{"type": "example_query", "content": "Q: 특정 달의 총 매출\nA: SELECT SUM(quantity * price) FROM orders WHERE order_date >= '2024-01-01' AND order_date < '2024-02-01';"}
+{"type": "schema", "content": "Table: users\nColumns:\n- id (integer, primary key)\n- name (varchar)\n- age (integer)\n- city (varchar)\n- signup_date (date)\n- membership_level (varchar)"}
+{"type": "schema", "content": "Table: orders\nColumns:\n- id (integer, primary key)\n- user_id (integer, foreign key -> users.id)\n- product_name (varchar)\n- quantity (integer)\n- price (numeric)\n- order_date (date)"}
+{"type": "schema", "content": "Table: products\nColumns:\n- id (integer, primary key)\n- name (varchar)\n- category (varchar)\n- price (numeric)"}
+{"type": "schema", "content": "Table: order_items\nColumns:\n- id (integer, primary key)\n- order_id (integer, foreign key -> orders.id)\n- product_id (integer, foreign key -> products.id)\n- quantity (integer)\n- price (numeric)"}
+{"type": "description", "content": "signup_date → 사용자가 가입한 날짜"}
+{"type": "description", "content": "membership_level → 고객의 멤버십 등급 (Silver, Gold, Platinum)"}
+{"type": "description", "content": "orders → 고객이 구매한 주문 내역"}
+{"type": "description", "content": "products → 판매 중인 상품 목록"}
+{"type": "description", "content": "order_items → 주문 상세 (어떤 주문에서 어떤 상품을 몇 개 샀는지)"}
+{"type": "example_query", "content": "Q: 서울에 사는 고객 수는?\nA: SELECT COUNT(*) FROM users WHERE city='서울';"}
+{"type": "example_query", "content": "Q: 특정 달(예: 2024년 1월)의 총 매출은?\nA: SELECT SUM(quantity * price) FROM orders WHERE order_date >= '2024-01-01' AND order_date < '2024-02-01';"}
+{"type": "example_query", "content": "Q: 가장 많이 판매된 상품 Top 5는?\nA: SELECT product_name, SUM(quantity) AS total_sold FROM orders GROUP BY product_name ORDER BY total_sold DESC LIMIT 5;"}
+{"type": "example_query", "content": "Q: 지난 6개월간 월별 매출 추이는?\nA: SELECT DATE_TRUNC('month', order_date) AS month, SUM(quantity * price) AS revenue FROM orders WHERE order_date >= CURRENT_DATE - INTERVAL '6 months' GROUP BY month ORDER BY month;"}
+{"type": "example_query", "content": "Q: 멤버십 등급별 평균 나이\nA: SELECT membership_level, AVG(age) FROM users GROUP BY membership_level;"}
